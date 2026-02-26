@@ -4,7 +4,7 @@ const app = express();
 const prisma = require('./config/prisma');
 const routes = require('./routes/auth.routes');
 app.use(cors());
-app.use(express.json);
+app.use(express.json());
 
 app.use('/api/auth', routes);
 
