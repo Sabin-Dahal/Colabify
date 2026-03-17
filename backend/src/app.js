@@ -12,6 +12,8 @@ app.get('/', (req, res) => {
     res.send('Hello check!');
 });
 
+app.use('/api/projects', require('./routes/project.routes'));
+app.use('/api/tasks', require('./routes/task.routes'));
 app.get('/test-db', async (req, res) => {
     try {
         const users = await prisma.user.findMany();

@@ -1,0 +1,11 @@
+# Dependencies
+backend/node_modules/
+
+# Environment Variables
+backend/.env
+
+# Prisma Generated Files
+backend/src/generated/
+
+# Logs
+npm-debug.log*
