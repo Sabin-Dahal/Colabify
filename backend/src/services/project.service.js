@@ -1,29 +1,68 @@
 const prisma = require('../config/prisma');
 const {assertUserHasProjectAccess} = require('./task.service');
-const createProject = async(projectData, ownerId) =>{
+const createProject = async (projectData, userId) => {
     return await prisma.project.create({
-        data:{
-            ...projectData, 
-            ownerId: ownerId
+        data: {
+            ...projectData,
+            ownerId: userId,
+            members: {
+                create: {
+                    userId: userId,
+                    role: 'OWNER'
+                }
+            }
         }
     });
 };
 
-const getProjects = async(userId) =>{
+const getProjects = async (userId) => {
     return await prisma.project.findMany({
-        where:{
-            OR:[
-                {ownerId: userId},
-                {members: {some: {userId: userId}}}
+        where: {
+            OR: [
+                { ownerId: userId },
+                { members: { some: { userId: userId } } }
             ]
         },
         include: {
-            owner: {select: {name:true}},
-            members: {select: {user: {select: {name:true}}}}
+            owner: { select: { name: true } },
+            members: {
+                where: { userId: userId },
+                select: { role: true } 
+            },
+            _count: {
+                select: { tasks: true }
+            }
+        },
+        orderBy: {
+            createdAt: 'desc'
         }
     });
 };
     
+const getProjectById = async ({ projectId, userId }) => {
+    await assertUserHasProjectAccess(userId, projectId, "VIEWER");
+    return await prisma.project.findUnique({
+        where: { id: projectId },
+        include: {
+            owner: { 
+                select: { id: true, name: true, email: true } 
+            },
+            members: {
+                include: {
+                    user: { 
+                        select: { name: true, email: true } 
+                    }
+                }
+            },
+            tasks: {
+                orderBy: { createdAt: 'desc' }
+            },
+            _count: {
+                select: { tasks: true }
+            }
+        }
+    });
+};
 
 const addMember = async(projectId, email, currentUserId) =>{
     const project = await prisma.project.findUnique({where: {id: projectId}});
@@ -114,4 +153,4 @@ const deleteProject = async({projectId, userId}) =>{
     ]);
     
 };
-module.exports = {createProject, getProjects, addMember, removeMember, deleteProject};
+module.exports = {createProject, getProjects, addMember, removeMember, deleteProject, getProjectById};

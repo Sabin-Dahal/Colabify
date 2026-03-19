@@ -8,4 +8,5 @@ router.get('/', protect, projectController.getProjects);
 router.post('/add-member', protect, projectController.addMember);
 router.delete('/:projectId', protect, projectController.deleteProject);
 router.delete('/:projectId/members/:userId', protect, projectController.removeMember);
+router.get('/:projectId', protect, projectController.getProjectById);
 module.exports = router;

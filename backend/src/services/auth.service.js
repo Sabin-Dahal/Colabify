@@ -39,4 +39,20 @@ const loginUser = async({email, password}) =>{
     );
     return {token};
 };
-module.exports = {register: registerUser, login: loginUser};
+
+const getProfile = async(userId)=>{
+    const user = await prisma.user.findUnique({where:{userId},
+        select:{
+            id:true,
+            email:true,
+            name:true,
+            role:true,
+        }
+});
+    if(!user){
+        const error = new Error("User not found");
+        error.statusCode = 401;
+        throw error;
+    }
+};
+module.exports = {register: registerUser, login: loginUser, getProfile};

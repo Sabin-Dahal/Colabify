@@ -17,6 +17,17 @@ const getProjects = async (req, res) => {
     }
 };
 
+const getProjectById = async(req, res) =>{
+    try{
+        const {projectId} = req.params;
+        const userId = req.user.id;
+        const project = await projectService.getProjectById({projectId, userId});
+        res.json({project});
+    }catch(error){
+        res.status(error.statusCode || 500).json({error:error.message});
+    }
+};
+
 const addMember = async (req, res) => {
     try {
         const { projectId, email } = req.body;
@@ -48,4 +59,4 @@ const deleteProject = async(req, res) =>{
         res.status(error.statusCode || 500).json({ error: error.message });
     }
 };
-module.exports = { createProject, getProjects, addMember, removeMember, deleteProject };
+module.exports = { createProject, getProjects, addMember, removeMember, deleteProject, getProjectById };

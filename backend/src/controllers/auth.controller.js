@@ -16,4 +16,13 @@ const login = async(req, res) =>{
         res.status(error.statusCode || 500).json({ error: error.message });
     }
 }; 
-module.exports = {register, login};
+const getProfile = async(req, res)=>{
+    try{
+        const userId = req.user.id;
+        const profile = await authService.getProfile(userId);
+        res.status(201).json({profile});
+    }catch(error){
+        res.status(error.statusCode||500).json({error: error.message});
+    }
+}
+module.exports = {register, login, getProfile};
