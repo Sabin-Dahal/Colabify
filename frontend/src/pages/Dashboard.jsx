@@ -33,6 +33,9 @@ const Dashboard = () => {
             alert("Failed to create project")
         }
     }
+    const handleDeleteSuccess = (projectId) =>{
+        setProjects((prev) =>prev.filter((p)=>p.id!==projectId))
+    };
 
 return (
         <div className="min-h-screen bg-gray-50 p-6 md:p-10">
@@ -53,7 +56,7 @@ return (
             ) : (
                 <div className="grid grid-cols-3 gap-6">
                     {projects.map((proj) => (
-                        <ProjectCard key={proj.id} project={proj} />
+                        <ProjectCard key={proj.id} project={proj} onDeleteSuccess={handleDeleteSuccess}/>
                     ))}
                     
                     {projects.length === 0 && (

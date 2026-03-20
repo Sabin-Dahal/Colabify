@@ -41,7 +41,7 @@ const loginUser = async({email, password}) =>{
 };
 
 const getProfile = async(userId)=>{
-    const user = await prisma.user.findUnique({where:{userId},
+    const user = await prisma.user.findUnique({where:{id: userId},
         select:{
             id:true,
             email:true,
@@ -54,5 +54,6 @@ const getProfile = async(userId)=>{
         error.statusCode = 401;
         throw error;
     }
+    return user;
 };
 module.exports = {register: registerUser, login: loginUser, getProfile};

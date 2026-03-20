@@ -25,7 +25,7 @@ const assertUserHasProjectAccess = async (userId, projectId, minimumRole = "VIEW
         error.statusCode = 403;
         throw error;
     }
-    const roles = ["VIEWER", "COLLABORATOR", "CONTRIBUTOR"];
+    const roles = ["VIEWER", "COLLABORATOR", "OWNER"];
     const userRoleIndex = roles.indexOf(membership.role);
     const requiredRoleIndex = roles.indexOf(minimumRole);
     if (userRoleIndex < requiredRoleIndex) {
