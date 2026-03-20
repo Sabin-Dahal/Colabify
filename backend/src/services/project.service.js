@@ -11,6 +11,14 @@ const createProject = async (projectData, userId) => {
                     role: 'OWNER'
                 }
             }
+        },
+        include:{
+            members:{
+                select: {role: true},
+            },
+            _count: {
+                select: {tasks: true}
+            }
         }
     });
 };
