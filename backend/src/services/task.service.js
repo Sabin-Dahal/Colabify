@@ -72,6 +72,8 @@ const assignTask = async (taskId, targetUserId, currentUserId) => {
         error.statusCode = 400;
         throw error;
     }
+            console.log("assign error:", err.response?.data); // add this
+        setAssignError(err.response?.data?.error || "Failed to assign");
     return await prisma.task.update({
         where: {id: taskId},
         data: {assignedTo: {connect: {id: targetUserId}}}
@@ -96,6 +98,9 @@ const updateTaskStatus = async({taskId, userId, updateData})=>{
         error.statusCode = 403;
         throw error;
     }
+    console.log("ownerId:", task.project.ownerId);
+console.log("userId:", userId);
+console.log("match:", task.project.ownerId === userId);
     return await prisma.task.update({
         where: {id: taskId},
         data: {status: updateData}

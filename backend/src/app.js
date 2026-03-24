@@ -5,7 +5,7 @@ const prisma = require('./config/prisma');
 const routes = require('./routes/auth.routes');
 app.use(cors({
     origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true
 }));
 app.use(express.json());

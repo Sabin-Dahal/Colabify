@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useAuth} from '../context/AuthContext.jsx';
 import {useNavigate} from 'react-router-dom';
 import api from '../services/api';
+import { Link } from 'react-router-dom';
 const Login = () =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -47,6 +48,12 @@ const Login = () =>{
                 <button type = "submit" className = "w-full bg-amber-600 text-white p-3 rounded-b-lg">
                     Sign In
                 </button>
+                <p className="text-center text-sm text-gray-500 mt-4">
+                    Don't have an account?{' '}
+                <Link to="/register" className="text-indigo-600 hover:underline font-medium">
+                    Register
+                </Link>
+</p>
             </form>
         </div>
     );

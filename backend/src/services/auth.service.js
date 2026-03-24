@@ -46,7 +46,6 @@ const getProfile = async(userId)=>{
             id:true,
             email:true,
             name:true,
-            role:true,
         }
 });
     if(!user){

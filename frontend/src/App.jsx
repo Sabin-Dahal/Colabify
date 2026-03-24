@@ -3,6 +3,9 @@ import {useAuth} from "./context/AuthContext";
 import LoginPage from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProjectDetails from "./pages/ProjectDetails";
+import Register from './pages/Register.jsx';
+
+
 
 function App(){
   const {token} = useAuth();
@@ -13,6 +16,7 @@ function App(){
         <Route path="/login" element={token ? <Navigate to="/dashboard"/> : <LoginPage/>}/>
         <Route path="/dashboard" element={token ? <Dashboard/> : <Navigate to="/login"/>}/>
         <Route path ="/project/:id" element = {token? <ProjectDetails/>: <Navigate to ="/login"/>}/>
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
