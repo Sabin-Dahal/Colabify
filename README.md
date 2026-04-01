@@ -87,6 +87,3 @@ App runs at `http://localhost:5173`, API at `http://localhost:5000`.
 | PATCH | /api/tasks/:id/assign | Assign task to user |
 | DELETE | /api/tasks/:id | Delete task |
 
-## Status
-
-Work in progress. See project status doc for what's next.
